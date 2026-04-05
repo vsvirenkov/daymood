@@ -1,0 +1,300 @@
+/* ===========================================
+   ГЛОБАЛЬНЫЕ СТИЛИ
+   Минималистичный дизайн — чистый, без лишнего.
+   Переменные CSS делают тему легко сменяемой.
+   =========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Serif+Display&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'DM Serif Display', Georgia, serif;
+
+  --bg:         #FAFAF8;
+  --surface:    #FFFFFF;
+  --border:     #E8E8E4;
+  --text:       #1A1A18;
+  --text-muted: #6B6B66;
+  --text-faint: #A8A8A2;
+  --accent:     #2D5016;
+  --accent-bg:  #EAF3DE;
+
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+
+  --transition: 150ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #111110;
+    --surface:    #1C1C1A;
+    --border:     #2E2E2A;
+    --text:       #F0F0EC;
+    --text-muted: #8A8A84;
+    --text-faint: #4A4A46;
+    --accent:     #7AC142;
+    --accent-bg:  #1A2810;
+  }
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===========================================
+   LAYOUT
+   =========================================== */
+
+.page {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+
+.page-header {
+  margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ===========================================
+   FORM
+   =========================================== */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+/* Mood grid */
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.mood-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+  user-select: none;
+}
+
+.mood-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.mood-option:hover {
+  border-color: var(--text-muted);
+}
+
+.mood-option.selected {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.mood-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.mood-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.mood-option.selected .mood-label {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Text field */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color var(--transition);
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+textarea::placeholder {
+  color: var(--text-faint);
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-align: right;
+}
+
+/* Submit button */
+button[type="submit"] {
+  padding: 14px 24px;
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+button[type="submit"]:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===========================================
+   ERRORS
+   =========================================== */
+
+.errors {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background: #FFF0F0;
+  border: 1px solid #FFD0D0;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: #C0392B;
+}
+
+@media (prefers-color-scheme: dark) {
+  .errors {
+    background: #2A1010;
+    border-color: #4A2020;
+    color: #FF8080;
+  }
+}
+
+/* ===========================================
+   SUCCESS STATE
+   =========================================== */
+
+.success-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.success-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.success-state p {
+  color: var(--text-muted);
+}
+
+.success-state button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+.success-state button:hover {
+  border-color: var(--text-muted);
+}

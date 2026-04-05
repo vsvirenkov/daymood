@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# env files — никогда не коммитим ключи
+.env
+.env.local
+.env.*.local
+
+# мусорная папка
+{src/
+
+# test results
+coverage/
+playwright-report/
+test-results/
+
+# misc
+.DS_Store
+*.pem
