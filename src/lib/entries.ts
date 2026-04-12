@@ -14,7 +14,7 @@ const MIN_TEXT_LENGTH = 10
 const MAX_TEXT_LENGTH = 1000
 const VALID_MOODS: MoodScore[] = [1, 2, 3, 4, 5]
 
-export function validateEntry(input: Partial<CreateEntryInput>): ValidationResult {
+export function validateEntry(input: { mood?: MoodScore | undefined; text?: string }): ValidationResult {
   const errors: string[] = []
 
   if (!input.mood || !VALID_MOODS.includes(input.mood as MoodScore)) {

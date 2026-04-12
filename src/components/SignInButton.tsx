@@ -7,7 +7,7 @@ export default function SignInClientButton() {
     <button
       onClick={() => supabase.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: `${window.location.origin}/auth/callback` },
+        options: { redirectTo: 'https://daymood.fun/auth/callback' },
       })}
       style={{
         padding: '14px 28px',

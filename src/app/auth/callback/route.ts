@@ -8,34 +8,32 @@ export async function GET(request: NextRequest) {
   const error = requestUrl.searchParams.get('error')
 
   if (error) {
-    console.error('OAuth error:', error, requestUrl.searchParams.get('error_description'))
-    return NextResponse.redirect(new URL('/?error=auth', request.url))
+    return NextResponse.redirect(new URL('/?error=auth', 'https://daymood.fun'))
   }
 
   if (code) {
     const cookieStore = cookies()
+    const response = NextResponse.redirect(new URL('/entry', 'https://daymood.fun'))
+
     const supabase = createServerClient(
       process.env['NEXT_PUBLIC_SUPABASE_URL']!,
       process.env['NEXT_PUBLIC_SUPABASE_ANON_KEY']!,
       {
         cookies: {
-          get: (name) => cookieStore.get(name)?.value,
-          set: (name, value, options) => {
-            cookieStore.set({ name, value, ...options })
+          get: (name: string) => cookieStore.get(name)?.value,
+          set: (name: string, value: string, options: Record<string, unknown>) => {
+            response.cookies.set({ name, value, ...options } as never)
           },
-          remove: (name, options) => {
-            cookieStore.set({ name, value: '', ...options })
+          remove: (name: string, options: Record<string, unknown>) => {
+            response.cookies.set({ name, value: '', ...options } as never)
           },
         },
       }
     )
 
-    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
-    if (exchangeError) {
-      console.error('Exchange error:', exchangeError)
-      return NextResponse.redirect(new URL('/?error=auth', request.url))
-    }
+    await supabase.auth.exchangeCodeForSession(code)
+    return response
   }
 
-  return NextResponse.redirect(new URL('/entry', request.url))
+  return NextResponse.redirect(new URL('/', 'https://daymood.fun'))
 }
