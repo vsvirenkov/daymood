@@ -21,9 +21,6 @@ jobs:
             set -e
             cd ~/apps/daymood-staging
             git pull origin main
-            sed -i 's/get: (name) =>/get: (name: string) =>/g' src/app/entry/page.tsx
-            sed -i 's/get: (name) =>/get: (name: string) =>/g' src/app/history/page.tsx
-            sed -i 's/get: (name) =>/get: (name: string) =>/g' src/app/page.tsx
             npm ci
             npm run build
             pm2 restart daymood-staging
