@@ -18,11 +18,12 @@ import type { MoodScore, CreateEntryInput } from '@/types'
 interface EntryFormProps {
   onSuccess?: (insight: string | null) => void
   userToken: string
+  entryCount?: number
 }
 
 const MOODS: MoodScore[] = [1, 2, 3, 4, 5]
 
-export function EntryForm({ onSuccess, userToken }: EntryFormProps) {
+export function EntryForm({ onSuccess, userToken, entryCount = 0 }: EntryFormProps) {
   const [mood, setMood] = useState<MoodScore | null>(null)
   const [text, setText] = useState('')
   const [errors, setErrors] = useState<string[]>([])
@@ -77,18 +78,51 @@ export function EntryForm({ onSuccess, userToken }: EntryFormProps) {
   }
 
   if (status === 'done') {
-    return (
-      <div className="success-state">
-        <span className="success-icon">✓</span>
-        <p>Entry saved for today.</p>
-        <button onClick={() => { setStatus('idle'); setMood(null); setText(''); window.location.href = '/history' }}>
-          View history
-        </button>
-      </div>
-    )
-  }
+        return (
+          <div className="success-state">
+            <span className="success-icon">✓</span>
+            <p>Entry saved for today.</p>
+            <button onClick={() => { setStatus('idle'); setMood(null); setText(''); window.location.href = '/history' }}>
+              View history
+            </button>
+          </div>
+        )
+      }
 
-  return (
+      return (
+        <div style={{ 
+      display: 'flex', 
+      justifyContent: 'flex-end', 
+      marginBottom: '1rem' 
+    }}>
+      <a 
+        href="/history" 
+        style={{
+          fontSize: '0.85rem',
+          color: 'var(--text-muted)',
+          textDecoration: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+        }}
+      >
+        View history →
+      </a>
+    </div>
+    {entryCount > 0 && (
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+        
+        href="/history"
+        style={{
+          fontSize: '0.85rem',
+          color: 'var(--text-muted)',
+          textDecoration: 'none',
+        }}
+        >
+          View history ({entryCount}) →
+        </a>
+      </div>
+    )}
     <form onSubmit={handleSubmit} noValidate aria-label="Daily mood entry">
       {/* Mood selector */}
       <fieldset>
