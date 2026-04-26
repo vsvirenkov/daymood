@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import PopItClient from '@/components/PopItClient'
 
 export const metadata: Metadata = {
   title: 'Relax — DayMood',
@@ -12,11 +13,7 @@ export default function RelaxPage() {
         <h1>Take a breath</h1>
         <p className="subtitle">Pop all the bubbles. It helps.</p>
       </header>
-      <PopIt />
+      <PopItClient />
     </main>
   )
-}
-
-function PopIt() {
-  return <PopItClient />
 }
