@@ -1,45 +1,26 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 
 const ROWS = 8
 const COLS = 10
 const TOTAL = ROWS * COLS
 
-function createGrid() {
-  return Array(TOTAL).fill(false)
-}
-
 export default function PopItClient() {
-  const [popped, setPopped] = useState<boolean[]>(createGrid)
+  const [popped, setPopped] = useState<boolean[]>(() => Array(TOTAL).fill(false))
   const [count, setCount] = useState(0)
   const allPopped = count === TOTAL
 
-  const pop = useCallback((i: number) => {
+  function pop(i: number) {
     if (popped[i]) return
-    try {
-      const ctx = new (window.AudioContext || (window as never)['webkitAudioContext'])()
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.frequency.setValueAtTime(300 + Math.random() * 200, ctx.currentTime)
-      osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.1)
-      gain.gain.setValueAtTime(0.3, ctx.currentTime)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15)
-      osc.start(ctx.currentTime)
-      osc.stop(ctx.currentTime + 0.15)
-    } catch (_e) {}
-    setPopped((prev) => {
-      const next = [...prev]
-      next[i] = true
-      return next
-    })
+    const next = [...popped]
+    next[i] = true
+    setPopped(next)
     setCount((c) => c + 1)
-  }, [popped])
+  }
 
   function reset() {
-    setPopped(createGrid())
+    setPopped(Array(TOTAL).fill(false))
     setCount(0)
   }
 
@@ -56,6 +37,7 @@ export default function PopItClient() {
           Reset
         </button>
       </div>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: '8px', maxWidth: '480px' }}>
         {popped.map((isPopped, i) => (
           <button
@@ -76,6 +58,7 @@ export default function PopItClient() {
           />
         ))}
       </div>
+
       {allPopped && (
         <div style={{ marginTop: '1.5rem', padding: '20px', background: 'var(--accent-bg)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
           <p style={{ margin: '0 0 12px', fontWeight: 500 }}>All {TOTAL} bubbles popped!</p>
