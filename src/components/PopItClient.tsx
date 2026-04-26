@@ -70,7 +70,7 @@ export default function PopItClient() {
               Pop again
             </button>
             
-              href="/entry"
+            <a href="/entry"
               style={{ padding: '10px 20px', background: 'transparent', color: 'var(--text)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}
             >
               Log your mood
