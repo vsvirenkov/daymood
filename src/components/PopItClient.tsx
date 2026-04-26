@@ -29,7 +29,7 @@ export default function PopItClient() {
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15)
       osc.start(ctx.currentTime)
       osc.stop(ctx.currentTime + 0.15)
-    } catch {}
+    } catch (_e) {}
     setPopped((prev) => {
       const next = [...prev]
       next[i] = true
