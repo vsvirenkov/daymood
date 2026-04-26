@@ -60,6 +60,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}>
               My journal
             </a>
+            <a href="/relax" style={{
+              fontSize: '0.9rem',
+              color: 'var(--text-muted)',
+              textDecoration: 'none',
+            }}>
+              Relax
+            </a>
           </div>
         </nav>
         {children}
