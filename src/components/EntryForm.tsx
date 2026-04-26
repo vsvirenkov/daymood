@@ -80,14 +80,7 @@ export function EntryForm({ onSuccess, userToken, entryCount = 0 }: EntryFormPro
     <div>
       {entryCount > 0 && (
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-          
-            href="/history"
-            style={{
-              fontSize: '0.85rem',
-              color: 'var(--text-muted)',
-              textDecoration: 'none',
-            }}
-          >
+          <a href="/history" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textDecoration: 'none' }}>
             View history ({entryCount}) →
           </a>
         </div>
