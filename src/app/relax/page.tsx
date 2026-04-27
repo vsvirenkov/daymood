@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import PopItClient from '@/components/PopItClient'
+import ShareButton from '@/components/ShareButton'
 
 export const metadata: Metadata = {
   title: 'Relax — DayMood',
