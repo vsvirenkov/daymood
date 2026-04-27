@@ -14,20 +14,22 @@ export async function POST(req: NextRequest) {
 
     const { pops } = await req.json() as { pops: number }
 
-    await supabase.from('popit_scores').upsert({
-      user_id: user.id,
-      total_pops: pops,
-      updated_at: new Date().toISOString(),
-    }, { onConflict: 'user_id' })
-
-    // Получаем актуальный счёт
-    const { data } = await supabase
+    // Получаем текущий счёт
+    const { data: existing } = await supabase
       .from('popit_scores')
       .select('total_pops')
       .eq('user_id', user.id)
       .single()
 
-    return NextResponse.json({ data: { total_pops: data?.total_pops ?? 0 } })
+    const newTotal = (existing?.total_pops ?? 0) + pops
+
+    await supabase.from('popit_scores').upsert({
+      user_id: user.id,
+      total_pops: newTotal,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'user_id' })
+
+    return NextResponse.json({ data: { total_pops: newTotal } })
   } catch (err) {
     console.error('[api/popit] error:', err)
     return NextResponse.json<ApiError>({ error: 'Internal server error' }, { status: 500 })

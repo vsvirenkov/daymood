@@ -33,29 +33,29 @@ export default function PopItClient({ userToken, userEmail }: Props) {
   }, [])
 
   async function pop(i: number) {
-    if (popped[i]) return
-    const next = [...popped]
-    next[i] = true
-    setPopped(next)
-    const newCount = count + 1
-    setCount(newCount)
+  if (popped[i]) return
+  const next = [...popped]
+  next[i] = true
+  setPopped(next)
+  const newCount = count + 1
+  setCount(newCount)
 
-    // Сохраняем если авторизован
-    if (userToken) {
-      try {
-        const res = await fetch('/api/popit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userToken}`,
-          },
-          body: JSON.stringify({ pops: totalPops + 1 }),
-        })
-        const data = await res.json()
-        setTotalPops(data.data?.total_pops ?? totalPops + 1)
-      } catch (_e) {}
-    }
+  // Отправляем на сервер только когда все поппнуты
+  if (newCount === TOTAL && userToken) {
+    try {
+      const res = await fetch('/api/popit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({ pops: TOTAL }),
+      })
+      const data = await res.json()
+      setTotalPops(data.data?.total_pops ?? totalPops + TOTAL)
+    } catch (_e) {}
   }
+}
 
   function reset() {
     setPopped(Array(TOTAL).fill(false))
