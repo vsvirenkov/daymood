@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import ShareButton from '@/components/ShareButton'
 
 interface Props {
   params: { slug: string }
@@ -56,6 +57,7 @@ export default function BlogPostPage({ params }: Props) {
           <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', margin: 0 }}>
             {post.description}
           </p>
+          <ShareButton title={post.title} />
         </header>
 
         <div style={{
