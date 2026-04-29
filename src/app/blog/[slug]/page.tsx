@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import ShareButton from '@/components/ShareButton'
+import CommentsSection from '@/components/CommentsSection'
 
 interface Props {
   params: { slug: string }
@@ -91,6 +92,8 @@ export default function BlogPostPage({ params }: Props) {
             Try DayMood free →
           </a>
         </div>
+
+        <CommentsSection slug={params.slug} />
       </article>
     </main>
   )

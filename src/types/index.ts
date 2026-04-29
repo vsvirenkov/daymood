@@ -42,6 +42,15 @@ export interface AiInsight {
   created_at: string
 }
 
+export interface BlogComment {
+  id: string
+  post_slug: string
+  user_id: string
+  author_name: string
+  body: string
+  created_at: string
+}
+
 export interface ApiError {
   error: string
   code?: string
