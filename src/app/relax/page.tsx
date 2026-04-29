@@ -27,11 +27,48 @@ export default async function RelaxPage() {
     <main className="page" style={{ paddingTop: '2rem' }}>
       <header className="page-header">
         <h1>Take a breath</h1>
-        <p className="subtitle">Pop all the bubbles. It helps.</p>
+        <p className="subtitle">Choose a relaxation game.</p>
+        
+        {/* --- МЕНЮ ВЫБОРА ИГР --- */}
+        <div style={{ marginTop: '16px', display: 'flex', gap: '10px' }}>
+          <a 
+            href="/relax" 
+            style={{
+              fontSize: '0.85rem',
+              fontWeight: 500,
+              color: 'var(--text)',
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-sm)',
+              padding: '6px 14px',
+              textDecoration: 'none',
+            }}
+          >
+            🫧 Pop-it
+          </a>
+          <a 
+            href="/relax/capybara" 
+            style={{
+              fontSize: '0.85rem',
+              fontWeight: 500,
+              color: 'var(--text)',
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
+              borderRadius: 'var(--radius-sm)',
+              padding: '6px 14px',
+              textDecoration: 'none',
+            }}
+          >
+            🐹 Capybara
+          </a>
+        </div>
+        {/* ----------------------- */}
+
         <div style={{ marginTop: '12px' }}>
           <ShareButton title="Pop-it relaxation game — DayMood" url="https://daymood.fun/relax" />
         </div>
       </header>
+      
       <PopItClient
         userToken={session?.access_token ?? null}
         userEmail={session?.user?.email ?? null}
