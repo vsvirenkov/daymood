@@ -27,6 +27,7 @@ export default async function RelaxPage() {
     <main className="page" style={{ paddingTop: '2rem' }}>
       <header className="page-header">
         <h1>Take a breath</h1>
+        <p className="subtitle">Pop all the bubbles. It helps.</p>
         <div style={{ marginTop: '12px' }}>
           <ShareButton title="Pop-it relaxation game — DayMood" url="https://daymood.fun/relax" />
         </div>
