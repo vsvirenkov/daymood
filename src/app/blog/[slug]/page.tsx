@@ -1,4 +1,4 @@
-import { getPostBySlug, getAllPosts } from '@/lib/blog'
+import { getPostBySlug, getAllPosts, getAdjacentPosts } from '@/lib/blog'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -26,6 +26,7 @@ export async function generateStaticParams() {
 export default function BlogPostPage({ params }: Props) {
   const post = getPostBySlug(params.slug)
   if (!post) notFound()
+  const { previous, next } = getAdjacentPosts(params.slug)
 
   return (
     <main className="page">
@@ -92,6 +93,65 @@ export default function BlogPostPage({ params }: Props) {
             Try DayMood free →
           </a>
         </div>
+
+        {(previous || next) && (
+          <nav
+            aria-label="Post navigation"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '16px',
+              marginTop: '3rem',
+              paddingTop: '2rem',
+              borderTop: '1px solid var(--border)',
+            }}
+          >
+            <div>
+              {previous && (
+                <Link
+                  href={`/blog/${previous.slug}`}
+                  style={{
+                    display: 'block',
+                    padding: '16px',
+                    borderRadius: 'var(--radius-md)',
+                    border: '1px solid var(--border)',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-faint)' }}>
+                    ← Previous
+                  </span>
+                  <span style={{ display: 'block', marginTop: 6, fontWeight: 500 }}>
+                    {previous.title}
+                  </span>
+                </Link>
+              )}
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              {next && (
+                <Link
+                  href={`/blog/${next.slug}`}
+                  style={{
+                    display: 'block',
+                    padding: '16px',
+                    borderRadius: 'var(--radius-md)',
+                    border: '1px solid var(--border)',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-faint)' }}>
+                    Next →
+                  </span>
+                  <span style={{ display: 'block', marginTop: 6, fontWeight: 500 }}>
+                    {next.title}
+                  </span>
+                </Link>
+              )}
+            </div>
+          </nav>
+        )}
 
         <CommentsSection slug={params.slug} />
       </article>

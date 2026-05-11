@@ -32,6 +32,19 @@ export function getAllPosts(): Omit<BlogPost, 'content'>[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
+export function getAdjacentPosts(slug: string): {
+  previous: Omit<BlogPost, 'content'> | null
+  next: Omit<BlogPost, 'content'> | null
+} {
+  const posts = getAllPosts()
+  const index = posts.findIndex((p) => p.slug === slug)
+  if (index === -1) return { previous: null, next: null }
+  return {
+    next: index > 0 ? posts[index - 1]! : null,
+    previous: index < posts.length - 1 ? posts[index + 1]! : null,
+  }
+}
+
 export function getPostBySlug(slug: string): BlogPost | null {
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
   if (!fs.existsSync(filePath)) return null
